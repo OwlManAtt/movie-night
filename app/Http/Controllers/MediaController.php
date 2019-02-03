@@ -7,7 +7,7 @@ use App\DataTables\MediaDataTable;
 
 class MediaController extends Controller
 {
-    public function index(MediaDataTable $dataTable)
+    public function index(Request $request, MediaDataTable $dataTable)
     {
         return $dataTable->render('media.index');
     } // end index

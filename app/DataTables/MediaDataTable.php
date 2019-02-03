@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\User;
 use App\Models\Media;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Services\DataTable;
 
 class MediaDataTable extends DataTable
@@ -16,8 +17,13 @@ class MediaDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        return datatables($query);
-            // ->addColumn('action', 'mediadatatable.action');
+        return datatables($query)
+            ->filterColumn('title', function ($query, $keyword) {
+                $keyword = strtolower($keyword);
+                $keyword = preg_replace('/[^A-Za-z0-9\s]+/', '', $keyword);
+
+                $query->where(DB::raw("LOWER(CAST(regexp_replace(\"media\".\"title\", '[^A-Za-z0-9\s]+', '', 'g') as TEXT))"), 'like', "%$keyword%");
+            });
     }
 
     /**
