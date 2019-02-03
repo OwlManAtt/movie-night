@@ -7,8 +7,8 @@ cache:
 
 env:
   global:
-    - DB_USERNAME=postgres
-    - DB_PASSWORD=
+    - DB_USERNAME="postgres"
+    - DB_PASSWORD=""
 
 php:
   - 7.1
@@ -19,13 +19,13 @@ before_install:
   - travis_retry composer self-update
 
 install:
-  - travis_retry composer install --dev --no-interaction
+  - travis_retry composer install --no-interaction
 
 script:
   - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
-  - travis_retry php vendor/bin/coveralls
+  - travis_retry php vendor/bin/php-coveralls
 
 notifications:
   email: true
