@@ -29,7 +29,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Movies &amp; Shows</a>
+                        <a class="nav-link" href="{{ route('media.index') }}">Movies &amp; Shows</a>
                     </li>
                 </ul>
 
@@ -45,5 +45,6 @@
         </main>
 
         <script src="{{ mix('/js/app.js') }}"></script>
+        @stack('scripts')
     </body>
 </html>
