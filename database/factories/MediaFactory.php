@@ -10,8 +10,8 @@ $factory->define(App\Models\Media::class, function (Faker $faker) {
     $media_morph = factory($type)->create();
 
     return [
-        'title' => $faker->company,
-        'imdb_id' => vsprintf('tt%s', [$faker->randomNumber(5)]),
+        'title' => $faker->movieTitle,
+        'imdb_id' => $faker->imdbId,
         'imdb_last_synced_at' => null,
         'imdb_rating' => null,
         'year' => null,
