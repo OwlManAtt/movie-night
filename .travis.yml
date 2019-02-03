@@ -20,10 +20,11 @@ before_script:
 
 before_install:
   - travis_retry composer self-update
-  - cp .env.example .env
 
 install:
   - travis_retry composer install --no-interaction
+  - cp .env.example .env
+  - php artisan key:generate --ansi
 
 script:
   - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
