@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64a750c10a0855472c77cfb0eeaa554c",
+    "content-hash": "f485580265bc9cdc00acc56610c972ae",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -3514,6 +3514,51 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "tophertk/omdblaravel",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TopherTk/omdb-laravel.git",
+                "reference": "baea368e75042c1eb07b3111090fbb8409d6d596"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TopherTk/omdb-laravel/zipball/baea368e75042c1eb07b3111090fbb8409d6d596",
+                "reference": "baea368e75042c1eb07b3111090fbb8409d6d596",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3@dev",
+                "laravel/framework": "5.7.*",
+                "php": "^7.1.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TopherTk\\OmdbLaravel\\OmdbServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TopherTk\\OmdbLaravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Crawford",
+                    "email": "scottishegg@live.co.uk"
+                }
+            ],
+            "description": "A Laravel wrapper for the Open Movie Database API",
+            "time": "2019-02-01T21:06:16+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

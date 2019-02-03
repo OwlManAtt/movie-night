@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\IMDB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-    }
-}
+        $imdb = new IMDB\OmdbLaravelApi;
+        $this->app->instance(IMDB\ImdbApi::class, $imdb);
+    } // end register
+
+} // end AppServiceProvider
