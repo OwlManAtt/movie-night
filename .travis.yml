@@ -6,8 +6,9 @@ cache:
     - vendor
 
 env:
-  - DB_USERNAME=postgres
-  - DB_PASSWORD=
+  global:
+    - DB_USERNAME=postgres
+    - DB_PASSWORD=
 
 php:
   - 7.1
