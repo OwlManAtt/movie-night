@@ -46,20 +46,16 @@ $(document).ready(function () {
     $('#titleSearch').typeahead({
         debug: {{ config('app.debug') === true ? 'true' : 'false' }},
         minLength: 2,
-        maxItems: 10,
+        maxItems: 5,
         order: 'asc',
         dynamic: true,
         delay: 500,
         emptyTemplate: "No results for @{{query}}",
         template: function (query, item) {
             return '<div class="row">' +
-                /*
-                '<span class="avatar">' +
-                '<img src="@{{avatar}}">' +
-                "</span>" +
-                */
-                '<div class="col-9">@{{Title}} <small>(@{{Year}})</small></div>' +
-                '<div class="col-3 ml-auto"><small class="text-muted">(@{{imdbID}})</small></div>' +
+                '<div class="col-2"><img src="@{{Poster}}" alt="" class="img-fluid"></div>' +
+                '<div class="col-8">@{{Title}}</div>' +
+                '<div class="col-2 ml-auto text-right"><span class="text-muted">@{{Year}}</span></div>' +
                 "</div>";
         },
         source: {

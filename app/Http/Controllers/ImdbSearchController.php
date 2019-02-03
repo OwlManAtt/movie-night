@@ -13,28 +13,20 @@ class ImdbSearchController extends Controller
             'title' => 'required|string',
         ]);
 
-        // @TODO shit, this API doesn't implement the omdb search method.
-        // Hack on a wrapping array so this controller is giving the "right"
-        // data and I'll write an omdb lib in a bit...
-        $results = $api->findByQuery($data);
+        $search_results = $api->findByQuery(['search' => $data['title']]);
 
-        if (array_key_exists('Response', $results) === true && $results['Response'] === "False") {
-            return response()->json([
-                'status' => false,
-                'error' => null,
-                'data' => [
-                    'imdb' => [],
-                ],
-            ])->setStatusCode(204);
-        }
+        return response()->json($this->typeaheadJson($search_results));
+    } // end __invoke
 
-        return response()->json([
-            'status' => true,
+    private function typeaheadJson($data = [])
+    {
+        return [
+            'status' => false,
             'error' => null,
             'data' => [
-                'imdb' => [$results],
-            ]
-        ]);
-    } // end __invoke
+                'imdb' => $data,
+            ],
+        ];
+    } // end typeaheadJson
 
 } // end ImdbSearchController

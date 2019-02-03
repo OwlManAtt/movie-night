@@ -8,25 +8,30 @@ class OmdbLaravelApi implements ImdbApi
 {
     public function findByQuery(array $params)
     {
-        $client = new OmdbLaravel\Service\OmdbClient($this->makeQuery($params));
+        $client = new OmdbLaravel\Service\OmdbClient(new OmdbLaravelSearchQuery($params));
+        $data = $client->getMediaInformation();
 
-        return $client->getMediaInformation();
+        if (array_key_exists('Response', $data) === true && $data['Response'] === 'False') {
+            return [];
+        }
+
+        return $data['Search'];
     } // end findByQuery
 
     public function findById(string $imdb_id)
-    {
-        $client = new OmdbLaravel\Service\OmdbClient($this->makeQuery(['imdb_id']));
-
-        return $client->getMediaInformation();
-    } // end findById
-
-    private function makeQuery(array $params)
     {
         if (array_key_exists('plot', $params) === false) {
             $params['plot'] = 'full';
         }
 
-        return new OmdbLaravel\Entities\Query($params);
-    } // end makeQuery
+        $client = new OmdbLaravel\Service\OmdbClient(new OmdbLaravel\Entities\Query($params));
+        $data = $client->getMediaInformation();
+
+        if (array_key_exists('Response', $data) === true && $data['Response'] === 'False') {
+            return null;
+        }
+
+        return $result;
+    } // end findById
 
 } // end OmdbLaravelApi
