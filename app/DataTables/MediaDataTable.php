@@ -53,6 +53,7 @@ class MediaDataTable extends DataTable
 
         $conf['buttons'] = [
             [
+                'name' => 'add',
                 'text' => 'Add',
             ],
             'csv',

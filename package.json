@@ -21,6 +21,7 @@
         "datatables.net-fixedheader-bs4": "^3.1.5",
         "datatables.net-responsive-bs4": "^2.2.3",
         "jquery": "^3.2",
+        "jquery-typeahead": "^2.10.6",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",

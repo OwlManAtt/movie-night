@@ -17,6 +17,8 @@ try {
     require('datatables.net-responsive-bs4');
     require('datatables.net-fixedheader-bs4');
     require('datatables.net-buttons-bs4');
+
+    require('jquery-typeahead/src/jquery.typeahead');
 } catch (e) {}
 
 /**

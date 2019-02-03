@@ -12,4 +12,6 @@
 */
 
 Route::get('/', 'DashboardController@index');
-Route::resource('media', 'MediaController');
+
+Route::resource('media', 'MediaController')->except(['create', 'edit']);
+Route::get('/imdb', 'ImdbSearchController')->name('imdb-search');
