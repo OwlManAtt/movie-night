@@ -22,11 +22,15 @@ before_install:
   - travis_retry composer self-update
 
 install:
+  - nvm install --lts
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
   - travis_retry composer install --no-interaction
   - cp .env.example .env
   - php artisan key:generate --ansi
+  - yarn install
 
 script:
+  - yarn run prod
   - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_failure:
