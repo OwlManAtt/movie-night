@@ -29,6 +29,9 @@ install:
 script:
   - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
+after_failure:
+- cat storage/logs/laravel*.log
+
 after_script:
   - travis_retry php vendor/bin/php-coveralls
 
