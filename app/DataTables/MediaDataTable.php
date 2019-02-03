@@ -52,12 +52,15 @@ class MediaDataTable extends DataTable
         $conf['fixedHeader'] = true;
 
         $conf['buttons'] = [
+            [
+                'text' => 'Add',
+            ],
             'csv',
             [
                 'extend' => 'colvis',
                 'text' => 'Columns <b class="caret"></b>',
                 'columns' => [0, ':gt(1)'],
-            ]
+            ],
         ];
 
         return $conf;
