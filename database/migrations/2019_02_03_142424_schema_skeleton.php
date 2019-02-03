@@ -31,6 +31,15 @@ class SchemaSkeleton extends Migration
 
         Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->string('title');
+            $table->string('imdb_id');
+
+            $table->datetime('imdb_last_synced_at')->nullable();
+            $table->integer('imdb_rating')->nullable();
+            $table->integer('year')->nullable();
+            $table->string('runtime')->nullable();
+
             $table->morphs('content');
 
             $table->timestamps();
@@ -39,7 +48,6 @@ class SchemaSkeleton extends Migration
 
         Schema::create('movies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
 
             $table->timestamps();
             $table->softDeletes();
@@ -47,7 +55,7 @@ class SchemaSkeleton extends Migration
 
         Schema::create('series', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->integer('episode_count')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -56,7 +64,6 @@ class SchemaSkeleton extends Migration
         Schema::create('series_episodes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('series_id')->index();
-            $table->string('title');
 
             $table->timestamps();
             $table->softDeletes();
