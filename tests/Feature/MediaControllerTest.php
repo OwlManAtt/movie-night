@@ -40,7 +40,7 @@ class MediaControllerTest extends TestCase
                 'recordsTotal' => 2,
                 'recordsFiltered' => 1,
                 'data' => [
-                    0 => ['title' => $media->title],
+                    0 => ['imdb_id' => $media->imdb_id],
                 ],
             ]);
     } // end test_index_searches_titles
@@ -57,7 +57,7 @@ class MediaControllerTest extends TestCase
                 'recordsTotal' => 2,
                 'recordsFiltered' => 1,
                 'data' => [
-                    0 => ['title' => $media->title],
+                    0 => ['imdb_id' => $media->imdb_id],
                 ],
             ]);
     } // end test_index_search_ignores_nonalphanum_characters

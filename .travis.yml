@@ -1,0 +1,30 @@
+language: php
+
+cache:
+  directories:
+    - "$HOME/.composer/cache"
+    - vendor
+
+env:
+  - DB_USERNAME=postgres
+  - DB_PASSWORD=
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+before_install:
+  - travis_retry composer self-update
+
+install:
+  - travis_retry composer install --dev --no-interaction
+
+script:
+  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+  - travis_retry php vendor/bin/coveralls
+
+notifications:
+  email: true
