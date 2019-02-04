@@ -92,7 +92,7 @@ class MediaDataTable extends DataTable
             ['title' => 'ID', 'data' => 'id', 'name' => 'id', 'visible' => false],
             ['title' => 'Title', 'data' => 'title', 'name' => 'title', 'render' => "'<a href=\"/media/' + full.id + '\">' + data + '</a>'"],
             ['title' => 'IMDB Rating', 'data' => 'imdb_rating', 'name' => 'imdb_rating'],
-            ['title' => 'Released', 'data' => 'year', 'name' => 'year'],
+            ['title' => 'Released', 'data' => 'year_released', 'name' => 'year_released'],
             ['title' => 'Runtime', 'data' => 'runtime', 'name' => 'runtime'],
             ['title' => 'Added to List', 'data' => 'created_at', 'name' => 'created_at', 'render' => "data.split(' ')[0]"],
         ];
