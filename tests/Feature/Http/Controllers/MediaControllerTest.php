@@ -16,7 +16,7 @@ class MediaControllerTest extends TestCase
 
     public function test_index_datatable_ajax()
     {
-        $media = factory(Media::class)->states('imdb-data')->create();
+        $media = factory(Media::class)->states('imdb-data')->create(['title' => 'Great Movie']);
 
         $response = $this->getJson('/media?draw=1', ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertOk()
@@ -61,6 +61,24 @@ class MediaControllerTest extends TestCase
                 ],
             ]);
     } // end test_index_search_ignores_nonalphanum_characters
+
+    public function test_create_media()
+    {
+        $response = $this->post(route('media.store'), ['imdbId' => 'tt12345', 'title' => 'Good Movie 2', 'mediaType' => 'movie', 'releasedYear' => null, 'posterUrl' => null]);
+        $response->assertOk();
+        $response->assertJsonStructure(['success', 'url', 'media_id']);
+
+        $json = json_decode($response->getContent(), JSON_OBJECT_AS_ARRAY);
+
+        $media = Media::find($json['media_id']);
+        $this->assertNotNull($media);
+    } // end test_create_media
+
+    public function test_create_media_with_weird_year()
+    {
+        $this->post(route('media.store'), ['imdbId' => 'tt12345', 'title' => 'Good Movie 2', 'mediaType' => 'movie', 'releasedYear' => '1999-', 'posterUrl' => null])
+            ->assertOk();
+    } // end test_create_media_with_weird_year
 
     private function buildDatatablesUrl($base, $columns, $filter = null)
     {

@@ -22,7 +22,8 @@ class MediaController extends Controller
 
         return response()->json([
             'success' => true,
-            'url' => route('media.show', [$media->id])
+            'url' => route('media.show', [$media->id]),
+            'media_id' => $media->id,
         ]);
     } // end store
 

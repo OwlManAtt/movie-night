@@ -12,7 +12,7 @@ class CreateMediaRequest extends FormRequest
 
         // Year can be "1992-" instead of an int, and all I want is the int.
         if (array_key_exists('releasedYear', $data) === true) {
-            $data['releasedYear'] = preg_replace('/[^0-9]*/', '', $data['releasedYear']);
+            $data['releasedYear'] = (int)preg_replace('/[^0-9]*/', '', $data['releasedYear']);
         }
 
         return $data;
