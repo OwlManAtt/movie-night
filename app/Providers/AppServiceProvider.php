@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $imdb = new IMDB\OmdbLaravelApi;
         $this->app->instance(IMDB\ImdbApi::class, $imdb);
+
+        if ($this->app->isLocal()) {
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     } // end register
 
 } // end AppServiceProvider

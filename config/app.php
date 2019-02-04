@@ -173,7 +173,10 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
+
+        // Registered for specific envs in AppServiceProvider#registry
+        // App\Providers\TelescopeServiceProvider::class,
+
         App\Providers\RouteServiceProvider::class,
         App\Providers\FakerMovieCollectionProvider::class,
     ],
