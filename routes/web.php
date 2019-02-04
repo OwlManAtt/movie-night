@@ -13,5 +13,10 @@
 
 Route::get('/', 'DashboardController@index');
 
+Route::prefix('/login')->namespace('Auth')->group(function () {
+    Route::get('discord', 'DiscordLoginController@redirectToProvider');
+    Route::get('discord/callback', 'DiscordLoginController@handleProviderCallback');
+});
+
 Route::resource('media', 'MediaController')->except(['create', 'edit']);
 Route::get('/imdb', 'ImdbSearchController')->name('imdb-search');

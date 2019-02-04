@@ -10,5 +10,8 @@ This is a Laravel app and the setup process is fairly standard:
 
 ```sh
 $ composer install
-$ yarn install && yarn run prod
+$ yarn install
+$ yarn run prod
 ```
+
+For Discord auth, do not forget to whitelist your callback URL (e.g. https://whatever.net/login/discord/callback) on the OAuth2 screen.
