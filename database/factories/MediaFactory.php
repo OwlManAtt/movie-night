@@ -1,13 +1,16 @@
 <?php
 
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 $factory->define(App\Models\Media::class, function (Faker $faker) {
     $type = $faker->randomElement([
-        App\Models\Movie::class,
-        App\Models\Series::class,
+        'movie',
+        'series',
     ]);
-    $media_morph = factory($type)->create();
+
+    $morph_map = Relation::morphMap();
+    $media_morph = factory($morph_map[$type])->create();
 
     return [
         'title' => $faker->movieTitle,

@@ -33,7 +33,7 @@ class MediaControllerTest extends TestCase
         $media = factory(Media::class)->states('imdb-data')->create(['title' => 'Alphanumeric Title']);
         factory(Media::class)->states('imdb-data')->create(['title' => "Mike's Cool and Good Adventure"]);
 
-        $url = $this->buildDatatablesUrl('/media', ['id', 'title', 'imdb_rating', 'year', 'runtime', 'created_at'], $media->title);
+        $url = $this->buildDatatablesUrl('/media', ['id', 'title', 'imdb_rating', 'year_released', 'runtime', 'created_at'], $media->title);
         $response = $this->getJson($url, ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertOk()
             ->assertJson([
@@ -50,7 +50,7 @@ class MediaControllerTest extends TestCase
         factory(Media::class)->states('imdb-data')->create(['title' => 'Alphanumeric Title']);
         $media = factory(Media::class)->states('imdb-data')->create(['title' => "Mike's Cool and Good Adventure"]);
 
-        $url = $this->buildDatatablesUrl('/media', ['id', 'title', 'imdb_rating', 'year', 'runtime', 'created_at'], str_replace("'", '', $media->title));
+        $url = $this->buildDatatablesUrl('/media', ['id', 'title', 'imdb_rating', 'year_released', 'runtime', 'created_at'], str_replace("'", '', $media->title));
         $response = $this->getJson($url, ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertOk()
             ->assertJson([

@@ -29,8 +29,6 @@ class MediaRepository
             $type_class = $type_lookup[$type];
             $media_subtype = $type_class::create();
 
-            dump($type);
-
             $media = Media::updateOrCreate(['imdb_id' => $imdb_id], [
                 'title' => $title,
                 'year_released' => $year_released,
