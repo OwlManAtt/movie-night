@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+        "sentry/sentry-laravel": "1.0.0-beta2",
         "tophertk/omdblaravel": "^1.0",
         "yajra/laravel-datatables": "^1.0"
     },
