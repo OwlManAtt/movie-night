@@ -21,7 +21,7 @@ class ImdbSearchController extends Controller
     private function typeaheadJson($data = [])
     {
         return [
-            'status' => false,
+            'status' => (count($data) > 0),
             'error' => null,
             'data' => [
                 'imdb' => $data,

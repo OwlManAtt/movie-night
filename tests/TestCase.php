@@ -14,6 +14,9 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         $this->artisan("db:seed");
+
+        $imdb_api = resolve(\App\Services\IMDB\MockImdbApi::class);
+        $this->app->instance(\App\Services\IMDB\ImdbApi::class, $imdb_api);
     } // end setUp
 
 } // end TestCase
