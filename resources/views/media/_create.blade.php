@@ -11,23 +11,38 @@
             <div class="modal-body">
                 <form id='createForm' action="{{ route('media.store' )}}" method="post">
                     @csrf
-                    <div class="form-group">
-                        <label for="titleSearch">Movie or Show Name</label>
-                        <div class="typeahead__container">
-                            <div class="typeahead__field">
-                                <div class="typeahead__query">
-                                   <input name="title" id="titleSearch" class="form-control js-typeahead" type="search" placeholder="Search..." autocomplete="off">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="titleSearch">Movie or Show Name</label>
+                            <div class="typeahead__container">
+                                <div class="typeahead__field">
+                                    <div class="typeahead__query">
+                                       <input name="title" id="titleSearch" class="form-control js-typeahead" type="search" placeholder="Search..." autocomplete="off">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="imdbId">IMDB ID</label>
-                        <input name="imdbId" type="text" class="form-control" id="imdbId" placeholder="IMDB ID Number..." readonly aria-describedby="imdbIdHelp">
-                        <small id="imdbIdHelp" class="form-text text-muted">
-                            This will be filled in for you when you find your movie/show on IMDB.
-                        </small>
+                    <div class="{{ config('app.debug') === true ? 'd-none' : 'd-none' }}">
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label for="imdbId">IMDB ID</label>
+                                <input name="imdbId" type="text" class="form-control" id="imdbId" readonly>
+                            </div>
+
+                            <div class="form-group col-6">
+                                <label for="releasedYear">Released</label>
+                                <input name="releasedYear" type="text" class="form-control" id="releasedYear" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="posterUrl">Poster URL</label>
+                                <input name="posterUrl" type="text" class="form-control" id="posterUrl" readonly>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -73,7 +88,14 @@ $(document).ready(function () {
         },
         callback: {
             onClick: function (node, a, item, event) {
-                $('#imdbId').val(item.imdbID)
+                $('#imdbId').val(item.imdbID);
+                $('#releasedYear').val(item.Year);
+                $('#posterUrl').val(item.Poster);
+            },
+            onCancel: function (node, event) {
+                $('#imdbId').val('');
+                $('#releasedYear').val('');
+                $('#posterUrl').val('');
             },
         },
     });
