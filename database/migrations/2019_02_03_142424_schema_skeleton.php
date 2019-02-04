@@ -37,8 +37,9 @@ class SchemaSkeleton extends Migration
 
             $table->datetime('imdb_last_synced_at')->nullable();
             $table->integer('imdb_rating')->nullable();
-            $table->integer('year')->nullable();
+            $table->integer('year_released')->nullable();
             $table->string('runtime')->nullable();
+            $table->text('poster_url')->nullable();
 
             $table->morphs('content');
 
