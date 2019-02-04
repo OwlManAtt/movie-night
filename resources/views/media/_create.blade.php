@@ -11,6 +11,10 @@
             <div class="modal-body">
                 <form id='createForm' action="{{ route('media.store' )}}" method="post">
                     @csrf
+                    <div class="d-none alert alert-danger" role="alert" id="createForm-fail">
+                        Search for a movie or TV show &amp; select it from the list of suggestions.
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group col">
                             <label for="titleSearch">Movie or Show Name</label>
@@ -24,7 +28,7 @@
                         </div>
                     </div>
 
-                    <div class="{{ config('app.debug') === true ? 'd-none' : 'd-none' }}">
+                    <div class="{{ config('app.debug') === true ? '' : 'd-none' }}">
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="imdbId">IMDB ID</label>
@@ -38,7 +42,12 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group col-12">
+                            <div class="form-group col-6">
+                                <label for="mediaType">Type</label>
+                                <input name="mediaType" type="text" class="form-control" id="mediaType" readonly>
+                            </div>
+
+                            <div class="form-group col-6">
                                 <label for="posterUrl">Poster URL</label>
                                 <input name="posterUrl" type="text" class="form-control" id="posterUrl" readonly>
                             </div>
@@ -49,7 +58,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-primary" id="submitCreateForm">Add</button>
             </div>
         </div>
     </div>
@@ -91,13 +100,34 @@ $(document).ready(function () {
                 $('#imdbId').val(item.imdbID);
                 $('#releasedYear').val(item.Year);
                 $('#posterUrl').val(item.Poster);
+                $('#mediaType').val(item.Type);
             },
             onCancel: function (node, event) {
                 $('#imdbId').val('');
                 $('#releasedYear').val('');
                 $('#posterUrl').val('');
+                $('#mediaType').val('');
             },
         },
+    });
+
+    $('#submitCreateForm').click(function () {
+        var form = $('#createForm');
+        console.log(form.attr('action'));
+
+        $.post({
+            url: form.attr('action'),
+            data: form.serialize(),
+        }).always(function () {
+            $('#createForm-fail').addClass('d-none');
+        })
+        .done(function (resp) {
+            $('#{{ $modal_id }}').modal('hide');
+            $('#createForm').trigger('reset');
+            api.ajax.reload();
+        }).fail(function (err, resp) {
+            $('#createForm-fail').removeClass('d-none');
+        });
     });
 });
 </script>

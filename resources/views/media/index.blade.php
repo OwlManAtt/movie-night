@@ -15,7 +15,7 @@ $(document).ready(function () {
     api = $('#dataTableBuilder').DataTable();
 
     api.button('add:name').action(function( e, dt, button, config ) {
-        $('#create-modal').modal();
+        $('#create-modal').modal('show');
     });
 });
 </script>
