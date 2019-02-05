@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use Auth;
 use Socialite;
+use Carbon\Carbon;
 use App\Repositories\UserRepository;
 
 class DiscordLoginController
 {
     public function redirectToProvider()
     {
-        return $this->driver()->redirect();
+        return $this->driver()->scopes(['identify', 'email', 'guilds'])->redirect();
     } // end redirectToProvider
 
     public function handleProviderCallback(UserRepository $repo)
@@ -24,13 +25,17 @@ class DiscordLoginController
             'avatar_url' => $discord_profile->getAvatar(),
             'verified' => $expanded['verified'],
             'mfa_enabled' => $expanded['mfa_enabled'],
+            'oauth_token' => $discord_profile->token,
+            'oauth_token_expires_at' => Carbon::now()->addSeconds($discord_profile->expiresIn),
+            'oauth_refresh_token' => $discord_profile->refreshToken,
         ]);
+
         Auth::login($user, true);
 
         return redirect('/');
     } // end handleProviderCallback
 
-    protected function driver()
+    private function driver()
     {
         return Socialite::driver('discord');
     } // end driver
