@@ -178,7 +178,7 @@ return [
         // App\Providers\TelescopeServiceProvider::class,
 
         App\Providers\RouteServiceProvider::class,
-        App\Providers\FakerMovieCollectionProvider::class,
+        App\Providers\FakerProvider::class,
     ],
 
     /*

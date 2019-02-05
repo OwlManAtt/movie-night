@@ -5,7 +5,7 @@ namespace App\Providers;
 use Faker;
 use Illuminate\Support\ServiceProvider;
 
-class FakerMovieCollectionProvider extends ServiceProvider
+class FakerProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -139,6 +139,19 @@ class FakerMovieCollectionProvider extends ServiceProvider
                 {
                     return vsprintf('tt%s', [$this->randomNumber(5)]);
                 }
+
+                public function discordNickname()
+                {
+                    $username = trim(join(' ', [$this->generator->userName, $this->generator->optional(0.4)->userName]));
+                    $discriminator = $this->numberBetween(1000, 9999);
+
+                    return sprintf('%s#%s', $username, $discriminator);
+                } // end discordNickname
+
+                public function discordAvatar()
+                {
+                    return vsprintf('https://cdn.discordapp.com/embed/avatars/%s.png', $this->numberBetween(0, 5));
+                } // end discordAvatar
             };
 
            $faker->addProvider($newClass);
@@ -146,4 +159,4 @@ class FakerMovieCollectionProvider extends ServiceProvider
        });
     } // end register
 
-} // end FakerMovieCollectionProvider
+} // end FakerProvider
