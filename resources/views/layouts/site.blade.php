@@ -15,11 +15,11 @@
     <body>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <a class="navbar-brand" href="/"><i class="fas fa-film"></i> Movie Night</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <div class="collapse navbar-collapse" id="siteNav">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -34,13 +34,26 @@
                     </li>
                 </ul>
 
-                @guest
-                <a href="/login/discord">Login</a>
-                @endguest
+                <ul class="navbar-nav ml-auto">
+                    @guest
+                    <li class="nav-item mt-auto mb-auto">
+                        <a href="/login/discord">Login</a>
+                    </li>
+                    @endguest
 
-                @auth
-                {{ Auth::user()->nickname }}
-                @endauth
+                    @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->nickname }}</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item mt-auto mb-auto">
+                        <img src="{{ Auth::user()->avatar_url }}" alt="" style="max-height: 40px;" class="rounded-circle border border-secondary">
+                    </li>
+                    @endauth
+                </ul>
             </div>
         </nav>
 
