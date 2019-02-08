@@ -40,5 +40,4 @@ class MediaRepository
             return $media;
         });
     } // end addOrUpdateStub
-
 } // end MediaRepository

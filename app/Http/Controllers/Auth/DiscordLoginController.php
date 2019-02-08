@@ -39,5 +39,4 @@ class DiscordLoginController
     {
         return Socialite::driver('discord');
     } // end driver
-
 } // end DiscordLoginController

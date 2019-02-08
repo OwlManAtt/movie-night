@@ -28,5 +28,4 @@ class ImdbSearchController extends Controller
             ],
         ];
     } // end typeaheadJson
-
 } // end ImdbSearchController

@@ -107,5 +107,4 @@ class MediaDataTable extends DataTable
     {
         return 'MovieNight_Media' . date('YmdHis');
     } // end filename
-
 } // end MediaDataTable

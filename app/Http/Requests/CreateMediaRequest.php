@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateMediaRequest extends FormRequest
 {
-    public function all($keys = NULL)
+    public function all($keys = null)
     {
         $data = parent::all($keys);
 
@@ -28,5 +28,4 @@ class CreateMediaRequest extends FormRequest
             'posterUrl' => 'nullable|string|url',
         ];
     } // end rules
-
 } // end CreateMediaRequest

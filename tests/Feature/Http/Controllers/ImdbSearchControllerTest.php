@@ -33,5 +33,4 @@ class ImdbSearchControllerTest extends TestCase
                 ],
             ]);
     } // end test_results_found
-
 } // end ImdbSearchControllerTest

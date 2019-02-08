@@ -33,5 +33,4 @@ class OmdbLaravelApi implements ImdbApi
 
         return $result;
     } // end findById
-
 } // end OmdbLaravelApi

@@ -20,5 +20,4 @@ class UserTest extends TestCase
 
         $this->assertEquals($user->avatar_url, $url);
     } // end test_redirects_to_cdn
-
 } // end UserTest

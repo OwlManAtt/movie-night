@@ -23,5 +23,4 @@ class UserRepository
             return $user;
         });
     } // end findOrCreate
-
 } // end UserRepository

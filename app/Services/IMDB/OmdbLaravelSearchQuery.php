@@ -59,5 +59,4 @@ class OmdbLaravelSearchQuery extends Query
     {
         return $this->queryString;
     }
-
 }

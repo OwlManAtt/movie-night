@@ -12,5 +12,4 @@ class DashboardControllerTest extends TestCase
     {
         $this->get('/')->assertOk();
     } // end test_dashboard_loads
-
 } // end DashboardControllerTest

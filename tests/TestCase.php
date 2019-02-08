@@ -18,5 +18,4 @@ abstract class TestCase extends BaseTestCase
         $imdb_api = resolve(\App\Services\IMDB\MockImdbApi::class);
         $this->app->instance(\App\Services\IMDB\ImdbApi::class, $imdb_api);
     } // end setUp
-
 } // end TestCase

@@ -30,5 +30,4 @@ class MediaRepositoryTest extends TestCase
         $this->assertEquals($media->id, $orig_media->id);
         $this->assertNotNull($media->poster_url);
     } // end test_updating_existing
-
 } // end DashboardControllerTest

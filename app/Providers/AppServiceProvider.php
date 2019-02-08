@@ -36,5 +36,4 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(TelescopeServiceProvider::class);
         }
     } // end register
-
 } // end AppServiceProvider

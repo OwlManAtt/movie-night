@@ -99,5 +99,4 @@ class MediaControllerTest extends TestCase
 
         return $url . join('&', $url_parts);
     } // end buildDatatableUrl
-
 } // end MediaControllerTest

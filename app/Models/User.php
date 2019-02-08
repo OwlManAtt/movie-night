@@ -40,5 +40,4 @@ class User extends Authenticatable
     {
         return new DiscordClient(['tokenType' => 'OAuth', 'token' => $this->oauth_token]);
     } // end discord_api
-
 } // end User

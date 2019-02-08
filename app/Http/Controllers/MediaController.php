@@ -26,5 +26,4 @@ class MediaController extends Controller
             'media_id' => $media->id,
         ]);
     } // end store
-
 } // end MediaController
