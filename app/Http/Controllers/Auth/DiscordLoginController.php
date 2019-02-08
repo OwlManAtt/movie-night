@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Socialite;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Login;
+use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 
-class DiscordLoginController
+class DiscordLoginController extends Controller
 {
     public function redirectToProvider()
     {
