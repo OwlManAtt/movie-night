@@ -18,5 +18,7 @@ Route::prefix('/login')->namespace('Auth')->group(function () {
     Route::get('discord/callback', 'DiscordLoginController@handleProviderCallback');
 });
 
+Route::get('/logout', 'Auth\\LogoutController');
+
 Route::resource('media', 'MediaController')->except(['create', 'edit']);
 Route::get('/imdb', 'ImdbSearchController')->name('imdb-search');
