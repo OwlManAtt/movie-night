@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
 use Socialite;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Login;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
+use App\Events;
 
 class DiscordLoginController extends Controller
 {
@@ -33,6 +33,7 @@ class DiscordLoginController extends Controller
         ]);
 
         Auth::login($user, true);
+        event(new Events\DiscordLogin(null, $user, true));
 
         return redirect('/');
     } // end handleProviderCallback

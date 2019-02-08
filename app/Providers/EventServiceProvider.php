@@ -19,7 +19,7 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\\Discord\\DiscordExtendSocialite@handle',
         ],
 
-        \Illuminate\Auth\Events\Login::class => [
+        \App\Events\DiscordLogin::class => [
             'App\\Listeners\\ImportDiscordGuilds',
         ],
     ];
