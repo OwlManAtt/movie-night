@@ -33,7 +33,6 @@ class DiscordLoginController extends Controller
         ]);
 
         Auth::login($user, true);
-        event(new Events\DiscordLogin(null, $user, true));
 
         return redirect('/');
     } // end handleProviderCallback

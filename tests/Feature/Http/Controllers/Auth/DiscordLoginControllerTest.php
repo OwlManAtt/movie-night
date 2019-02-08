@@ -6,7 +6,8 @@ use Faker;
 use Mockery;
 use Tests\TestCase;
 use App\Models\User;
-use App\Events\DiscordLogin;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -15,6 +16,7 @@ class DiscordLoginControllerTest extends TestCase
     public function test_new_user_starts_inactive()
     {
         Event::fake();
+        Auth::guard()->setDispatcher(app('events'));
 
         $fake_user = $this->fakeUser();
         Socialite::shouldReceive('driver->user')->andReturn($fake_user);
@@ -29,15 +31,16 @@ class DiscordLoginControllerTest extends TestCase
 
     public function test_fires_sync_event()
     {
-        Event::fakeFor(function () {
-            $fake_user = $this->fakeUser();
-            Socialite::shouldReceive('driver->user')->andReturn($fake_user);
+        Event::fake();
+        Auth::guard()->setDispatcher(app('events'));
 
-            $this->get('/login/discord/callback')
-                ->assertRedirect('/');
+        $fake_user = $this->fakeUser();
+        Socialite::shouldReceive('driver->user')->andReturn($fake_user);
 
-            Event::assertDispatched(DiscordLogin::class);
-        });
+        $this->get('/login/discord/callback')
+            ->assertRedirect('/');
+
+        Event::assertDispatched(Login::class);
     }
 
     private function fakeUser()
