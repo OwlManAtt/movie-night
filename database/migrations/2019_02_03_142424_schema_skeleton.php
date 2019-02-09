@@ -66,7 +66,7 @@ class SchemaSkeleton extends Migration
 
         Schema::create('series_episodes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('series_id')->nullable()->index();
+            $table->integer('series_id')->index();
             $table->integer('season')->nullable();
             $table->string('episode')->nullable();
             $table->integer('episode_order')->nullable();

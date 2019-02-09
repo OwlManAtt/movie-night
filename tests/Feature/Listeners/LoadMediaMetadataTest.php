@@ -44,7 +44,7 @@ class LoadMediaMetadataTest extends TestCase
         $this->assertNotNull($media->imdb_last_synced_at);
         $this->assertNotNull($media->plot_summary);
 
-        $ep_count = $series->episodes()->count();
+        $ep_count = $media->content->episodes()->count();
         $this->assertGreaterThan(0, $ep_count);
         Event::assertDispatched(Events\MediaChanged::class, $ep_count);
     }
