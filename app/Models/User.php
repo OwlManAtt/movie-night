@@ -6,14 +6,22 @@ use Carbon\Carbon;
 use RestCord\DiscordClient;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use AustinHeap\Database\Encryption\Traits\HasEncryptedAttributes;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasEncryptedAttributes;
 
     protected $fillable = ['nickname', 'email', 'discord_id', 'avatar_url', 'mfa_enabled', 'oauth_token', 'oauth_token_expires_at', 'oauth_refresh_token'];
     protected $hidden = ['remember_token', 'oauth_token', 'oauth_refresh_token'];
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'oauth_token_expires_at'];
+
+    /**
+     * Really just mitigates possible harm from SQL injection.
+     *
+     * An attacker who can get the Laravel app key can still decrypt.
+     */
+    protected $encrypted = ['oauth_token', 'oauth_refresh_token'];
 
     public function getAvatarUrlAttribute($value)
     {

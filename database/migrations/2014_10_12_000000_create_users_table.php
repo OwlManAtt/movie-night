@@ -21,9 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('discord_id');
             $table->boolean('mfa_enabled');
 
-            $table->string('oauth_token')->nullable();
+            $table->text('oauth_token')->nullable();
             $table->datetime('oauth_token_expires_at')->nullable();
-            $table->string('oauth_refresh_token')->nullable();
+            $table->text('oauth_refresh_token')->nullable();
 
             $table->boolean('app_access_enabled')->default(false);
 

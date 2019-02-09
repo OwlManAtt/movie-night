@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserTest extends TestCase
 {
@@ -20,4 +21,30 @@ class UserTest extends TestCase
 
         $this->assertEquals($user->avatar_url, $url);
     } // end test_redirects_to_cdn
+
+    /**
+     * @dataProvider encrypted_fields
+     */
+    public function test_oauth_token_encrypted_at_rest($attribute)
+    {
+        $user = factory(User::class)->create();
+
+        $plaintext = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+        $user->$attribute = $plaintext;
+        $user->save();
+
+        $raw_row = DB::table('users')->where('id', $user->id)->first();
+        $this->assertNotEquals($plaintext, $raw_row->$attribute, 'Raw DB value is not encrypted');
+
+        $user = User::find($user->id);
+        $this->assertEquals($plaintext, $user->$attribute, 'Model accessor is not decrypted');
+    }
+
+    public function encrypted_fields()
+    {
+        return [
+            ['oauth_token'],
+            ['oauth_refresh_token'],
+        ];
+    }
 } // end UserTest
