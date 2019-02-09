@@ -56,6 +56,7 @@ class SchemaSkeleton extends Migration
 
         Schema::create('series', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('season_count')->nullable();
             $table->integer('episode_count')->nullable();
 
             $table->timestamps();
@@ -65,6 +66,9 @@ class SchemaSkeleton extends Migration
         Schema::create('series_episodes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('series_id')->index();
+            $table->integer('season')->nullable();
+            $table->string('episode')->nullable();
+            $table->integer('episode_order')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -79,5 +83,4 @@ class SchemaSkeleton extends Migration
         Schema::dropIfExists('movies');
         Schema::dropIfExists('series_episodes');
     } // end down
-
 } // end SchemaSkeleton
