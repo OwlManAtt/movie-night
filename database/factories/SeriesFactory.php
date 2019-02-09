@@ -12,5 +12,7 @@ $factory->define(App\Models\Series::class, function (Faker $faker) {
 });
 
 $factory->afterCreating(App\Models\Series::class, function ($series, $faker) {
-    factory(App\Models\SeriesEpisode::class, $series->episode_count)->create(['series_id' => $series->id]);
+    factory(App\Models\SeriesEpisode::class, $series->episode_count)->create(['series_id' => $series->id])->each(function ($episode) {
+        factory(App\Models\Media::class)->create(['content_type' => 'episode', 'content_id' => $episode->id]);
+    });
 });

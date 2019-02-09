@@ -14,8 +14,7 @@ class LoadMediaMetadataTest extends TestCase
 {
     public function test_movie_details()
     {
-        $movie = factory(\App\Models\Movie::class)->create();
-        $media = factory(Media::class)->create(['content_type' => 'movie', 'content_id' => $movie->id]);
+        $media = factory(Media::class)->states('movie')->create();
 
         $api = resolve(ImdbApi::class);
         $api->setTestType('movie');
@@ -32,9 +31,8 @@ class LoadMediaMetadataTest extends TestCase
     {
         Event::fake();
 
-        $series = factory(\App\Models\Series::class)->create();
-        $series->episodes()->delete(); // get rid of the ones this comes with
-        $media = factory(Media::class)->create(['content_type' => 'series', 'content_id' => $series->id]);
+        $media = factory(Media::class)->states('series')->create();
+        $media->content->episodes()->delete(); // get rid of the ones this comes with
 
         $api = resolve(ImdbApi::class);
         $api->setTestType('series');
@@ -53,8 +51,8 @@ class LoadMediaMetadataTest extends TestCase
 
     public function test_episode_details()
     {
-        $episode = factory(\App\Models\SeriesEpisode::class)->create();
-        $media = factory(Media::class)->create(['content_type' => 'episode', 'content_id' => $episode->id]);
+        $series = factory(Media::class)->states('series')->create();
+        $media = $series->content->episodes()->first()->media;
 
         $api = resolve(ImdbApi::class);
         $api->setTestType('episode');

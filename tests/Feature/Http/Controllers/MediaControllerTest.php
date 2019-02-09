@@ -19,7 +19,7 @@ class MediaControllerTest extends TestCase
 
     public function test_index_datatable_ajax()
     {
-        $media = factory(Media::class)->states('imdb-data')->create(['title' => 'Great Movie']);
+        $media = factory(Media::class)->states('movie', 'imdb-data')->create(['title' => 'Great Movie']);
 
         $response = $this->getJson('/media?draw=1', ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertOk()
@@ -33,8 +33,8 @@ class MediaControllerTest extends TestCase
 
     public function test_index_searches_titles()
     {
-        $media = factory(Media::class)->states('imdb-data')->create(['title' => 'Alphanumeric Title']);
-        factory(Media::class)->states('imdb-data')->create(['title' => "Mike's Cool and Good Adventure"]);
+        $media = factory(Media::class)->states('movie', 'imdb-data')->create(['title' => 'Alphanumeric Title']);
+        factory(Media::class)->states('movie', 'imdb-data')->create(['title' => "Mike's Cool and Good Adventure"]);
 
         $url = $this->buildDatatablesUrl('/media', ['id', 'title', 'imdb_rating', 'year_released', 'runtime', 'created_at'], $media->title);
         $response = $this->getJson($url, ['X-Requested-With' => 'XMLHttpRequest'])
@@ -50,8 +50,8 @@ class MediaControllerTest extends TestCase
 
     public function test_index_search_ignores_apostrophes()
     {
-        factory(Media::class)->states('imdb-data')->create(['title' => 'Alphanumeric Title']);
-        $media = factory(Media::class)->states('imdb-data')->create(['title' => "Mike's Cool and Good Adventure"]);
+        factory(Media::class)->states('movie', 'imdb-data')->create(['title' => 'Alphanumeric Title']);
+        $media = factory(Media::class)->states('movie', 'imdb-data')->create(['title' => "Mike's Cool and Good Adventure"]);
 
         $url = $this->buildDatatablesUrl('/media', ['id', 'title', 'imdb_rating', 'year_released', 'runtime', 'created_at'], str_replace("'", '', $media->title));
         $response = $this->getJson($url, ['X-Requested-With' => 'XMLHttpRequest'])
@@ -67,16 +67,17 @@ class MediaControllerTest extends TestCase
 
     public function test_no_episodes()
     {
-        $ep = factory(SeriesEpisode::class)->create();
-        $media = factory(Media::class)->states('imdb-data')->create([
-            'content_type' => 'episode',
-            'content_id' => $ep->id,
-        ]);
+        $series = factory(Media::class)->states('series', 'imdb-data')->create(['title' => 'Just the Series Record']);
 
         $response = $this->getJson('/media?draw=1', ['X-Requested-With' => 'XMLHttpRequest'])
         ->assertOk()
         ->assertJson([
-            'recordsTotal' => 0,
+            'recordsTotal' => 1,
+            'data' => [
+                0 => [
+                    'title' => $series->title,
+                ]
+            ]
         ]);
     }
 

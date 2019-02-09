@@ -24,7 +24,7 @@ class MediaRepositoryTest extends TestCase
 
     public function test_updating_existing()
     {
-        $orig_media = factory(\App\Models\Media::class)->create([]);
+        $orig_media = factory(\App\Models\Media::class)->states('movie')->create([]);
 
         $media = $this->repo->addOrUpdateStub($orig_media->imdb_id, $orig_media->title, $orig_media->content_type, 'http://catpics.org/cat.png');
         $this->assertEquals($media->id, $orig_media->id);
