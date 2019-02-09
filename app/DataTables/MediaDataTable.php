@@ -54,9 +54,12 @@ class MediaDataTable extends DataTable
         $conf['buttons'] = [
             [
                 'name' => 'add',
-                'text' => 'Add',
+                'text' => '<i class="fas fa-xs fa-plus"></i> Add',
             ],
-            'csv',
+            [
+                'extend' => 'csv',
+                'text' => '<i class="fas fs-xs fa-file-csv"></i> CSV',
+            ],
             [
                 'extend' => 'colvis',
                 'text' => 'Columns <b class="caret"></b>',
