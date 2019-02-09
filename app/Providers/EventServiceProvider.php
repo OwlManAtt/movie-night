@@ -22,6 +22,10 @@ class EventServiceProvider extends ServiceProvider
         \Illuminate\Auth\Events\Login::class => [
             'App\\Listeners\\ImportDiscordGuilds',
         ],
+
+        \App\Events\MediaChanged::class => [
+            \App\Listeners\LoadMediaMetadata::class,
+        ],
     ];
 
     /**
