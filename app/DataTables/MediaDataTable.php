@@ -34,7 +34,7 @@ class MediaDataTable extends DataTable
      */
     public function query(Media $model)
     {
-        return $model->newQuery()->select();
+        return $model->newQuery()->select()->where('content_type', '<>', 'episode');
     }
 
     public function getBuilderParameters()

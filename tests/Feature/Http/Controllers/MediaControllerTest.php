@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers;
 use App\Events;
 use Tests\TestCase;
 use App\Models\Media;
+use App\Models\SeriesEpisode;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -63,6 +64,21 @@ class MediaControllerTest extends TestCase
                 ],
             ]);
     } // end test_index_search_ignores_nonalphanum_characters
+
+    public function test_no_episodes()
+    {
+        $ep = factory(SeriesEpisode::class)->create();
+        $media = factory(Media::class)->states('imdb-data')->create([
+            'content_type' => 'episode',
+            'content_id' => $ep->id,
+        ]);
+
+        $response = $this->getJson('/media?draw=1', ['X-Requested-With' => 'XMLHttpRequest'])
+        ->assertOk()
+        ->assertJson([
+            'recordsTotal' => 0,
+        ]);
+    }
 
     public function test_create_media()
     {
