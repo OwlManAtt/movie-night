@@ -36,10 +36,11 @@ class SchemaSkeleton extends Migration
             $table->string('imdb_id');
 
             $table->datetime('imdb_last_synced_at')->nullable();
-            $table->integer('imdb_rating')->nullable();
+            $table->double('imdb_rating', 4, 1)->nullable();
             $table->integer('year_released')->nullable();
             $table->string('runtime')->nullable();
             $table->text('poster_url')->nullable();
+            $table->text('plot_summary')->nullable();
 
             $table->morphs('content');
 
@@ -65,7 +66,7 @@ class SchemaSkeleton extends Migration
 
         Schema::create('series_episodes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('series_id')->index();
+            $table->integer('series_id')->nullable()->index();
             $table->integer('season')->nullable();
             $table->string('episode')->nullable();
             $table->integer('episode_order')->nullable();
