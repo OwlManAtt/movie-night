@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Repositories;
 
 use Tests\TestCase;
 use App\Repositories\MediaRepository;
