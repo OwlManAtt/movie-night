@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events;
 use Illuminate\Http\Request;
 use App\DataTables\MediaDataTable;
 use App\Repositories\MediaRepository;
@@ -19,6 +20,7 @@ class MediaController extends Controller
         $data = $request->all();
 
         $media = $repo->addOrUpdateStub($data['imdbId'], $data['title'], $data['mediaType'], $data['posterUrl'], $data['releasedYear']);
+        event(new Events\MediaChanged($media));
 
         return response()->json([
             'success' => true,

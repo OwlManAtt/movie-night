@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Events;
 use Tests\TestCase;
 use App\Models\Media;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 
 class MediaControllerTest extends TestCase
 {
@@ -64,9 +66,12 @@ class MediaControllerTest extends TestCase
 
     public function test_create_media()
     {
+        Event::fake();
+
         $response = $this->post(route('media.store'), ['imdbId' => 'tt12345', 'title' => 'Good Movie 2', 'mediaType' => 'movie', 'releasedYear' => null, 'posterUrl' => null]);
         $response->assertOk();
         $response->assertJsonStructure(['success', 'url', 'media_id']);
+        Event::assertDispatched(Events\MediaChanged::class);
 
         $json = json_decode($response->getContent(), JSON_OBJECT_AS_ARRAY);
 
@@ -76,6 +81,8 @@ class MediaControllerTest extends TestCase
 
     public function test_create_media_with_weird_year()
     {
+        Event::fake();
+
         $this->post(route('media.store'), ['imdbId' => 'tt12345', 'title' => 'Good Movie 2', 'mediaType' => 'movie', 'releasedYear' => '1999-', 'posterUrl' => null])
             ->assertOk();
     } // end test_create_media_with_weird_year
