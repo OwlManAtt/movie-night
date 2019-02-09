@@ -8,11 +8,9 @@ class OmdbLaravelApi implements ImdbApi
 {
     public function findByQuery(array $params)
     {
-        $client = new OmdbLaravel\Service\OmdbClient(new OmdbLaravelSearchQuery($params));
-        $data = $client->getMediaInformation();
-
-        if (array_key_exists('Response', $data) === true && $data['Response'] === 'False') {
-            return [];
+        $data = $this->query(OmdbLaravelSearchQuery::class, $params);
+        if ($data === null) {
+            return $data;
         }
 
         return $data['Search'];
@@ -20,17 +18,30 @@ class OmdbLaravelApi implements ImdbApi
 
     public function findById(string $imdb_id)
     {
-        if (array_key_exists('plot', $params) === false) {
-            $params['plot'] = 'full';
-        }
+        return $this->query(OmdbLaravel\Entities\Query::class, [
+            'imdb_id' => $imdb_id,
+            'plot' => 'full',
+        ]);
+    } // end findById
 
-        $client = new OmdbLaravel\Service\OmdbClient(new OmdbLaravel\Entities\Query($params));
+    public function findByIdAndSeason(string $imdb_id, string $season)
+    {
+        return $this->query(OmdbLaravel\Entities\Query::class, [
+            'imdb_id' => $imdb_id,
+            'season' => $season,
+            'plot' => 'full',
+        ]);
+    }
+
+    private function query($query_entity, $params)
+    {
+        $client = new OmdbLaravel\Service\OmdbClient(new $query_entity($params));
         $data = $client->getMediaInformation();
 
         if (array_key_exists('Response', $data) === true && $data['Response'] === 'False') {
             return null;
         }
 
-        return $result;
-    } // end findById
+        return $data;
+    }
 } // end OmdbLaravelApi

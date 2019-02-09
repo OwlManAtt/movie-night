@@ -37,4 +37,9 @@ class MockImdbApi implements ImdbApi
     {
         throw new \Exception('Not Yet Implemented');
     } // end findById
+
+    public function findByIdAndSeason(string $imdb_id, string $season)
+    {
+        throw new \Exception('Not Yet Implemented');
+    }
 } // end MockImdbApi
