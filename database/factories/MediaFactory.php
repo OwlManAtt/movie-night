@@ -35,5 +35,6 @@ $factory->state(App\Models\Media::class, 'imdb-data', function ($faker) {
         'year_released' => $faker->year(),
         'poster_url' => $faker->imageUrl(400, 600, 'cats'),
         'runtime' => vsprintf('%s minutes', [$faker->biasedNumberBetween(150, 212)]),
+        'plot_summary' => $faker->paragraph,
     ];
 });
