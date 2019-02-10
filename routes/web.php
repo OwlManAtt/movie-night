@@ -14,11 +14,12 @@
 Route::get('/', 'DashboardController@index');
 
 Route::prefix('/login')->namespace('Auth')->group(function () {
-    Route::get('discord', 'DiscordLoginController@redirectToProvider');
+    Route::get('/', 'LandingController')->name('login');
+    Route::get('discord', 'DiscordLoginController@redirectToProvider')->name('oauth-start');
     Route::get('discord/callback', 'DiscordLoginController@handleProviderCallback');
 });
 
-Route::get('/logout', 'Auth\\LogoutController');
+Route::get('/logout', 'Auth\\LogoutController')->name('logout');
 
 Route::resource('media', 'MediaController')->except(['create', 'edit']);
 Route::get('/imdb', 'ImdbSearchController')->name('imdb-search');
