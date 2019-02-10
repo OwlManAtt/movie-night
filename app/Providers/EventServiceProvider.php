@@ -19,10 +19,6 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\\Discord\\DiscordExtendSocialite@handle',
         ],
 
-        \Illuminate\Auth\Events\Login::class => [
-            'App\\Listeners\\ImportDiscordGuilds',
-        ],
-
         \App\Events\MediaChanged::class => [
             \App\Listeners\LoadMediaMetadata::class,
         ],

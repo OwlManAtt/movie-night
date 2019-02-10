@@ -4,20 +4,21 @@ namespace Tests\Feature\Controllers\Auth;
 
 use Faker;
 use Mockery;
+use RestCord;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Event;
 use Laravel\Socialite\Facades\Socialite;
 
 class DiscordLoginControllerTest extends TestCase
 {
-    public function test_new_user_starts_inactive()
+    /**
+     * @dataProvider guild_id_provider
+     */
+    public function test_user_access_grant($allowed_guild_id, $api_guild_id, $expected_value, $description)
     {
-        Event::fake();
-        Auth::guard()->setDispatcher(app('events'));
+        $this->app['config']->set('movie-night.discordServer', $allowed_guild_id);
 
+        $this->overloardRestcord($api_guild_id); // replaces getCurrentUserGuilds w/ stub
         $fake_user = $this->fakeUser();
         Socialite::shouldReceive('driver->user')->andReturn($fake_user);
 
@@ -26,21 +27,30 @@ class DiscordLoginControllerTest extends TestCase
 
         $user = User::where('nickname', $fake_user->getNickname())->first();
         $this->assertNotNull($user);
-        $this->assertFalse($user->app_access_enabled);
-    } // end test_dashboard_loads
+        $this->assertEquals($expected_value, $user->app_access_enabled, $description);
+    }
 
-    public function test_fires_sync_event()
+    public function guild_id_provider()
     {
-        Event::fake();
-        Auth::guard()->setDispatcher(app('events'));
+        return [
+            // config(movie-night.discordServer), ID in API response, expected app_access_enabled, description
+            ['12345', '9999', false, 'Not in configured guild'],
+            ['123', '123', true, 'In configured guild'],
+        ];
+    }
 
-        $fake_user = $this->fakeUser();
-        Socialite::shouldReceive('driver->user')->andReturn($fake_user);
+    private function overloardRestcord($id)
+    {
+        $guild = Mockery::mock(RestCord\Model\Guild\Guild::class);
+        $guild->owner = false;
+        $guild->permissions = 2146958847;
+        $guild->icon = 'aaaaaa';
+        $guild->id = $id;
+        $guild->name = "Guild Name";
 
-        $this->get('/login/discord/callback')
-            ->assertRedirect('/');
-
-        Event::assertDispatched(Login::class);
+        return Mockery::mock(sprintf('overload:%s', RestCord\OverriddenGuzzleClient::class))
+            ->shouldReceive('getCurrentUserGuilds')
+            ->andReturn([$guild]);
     }
 
     private function fakeUser()

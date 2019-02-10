@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Support\Facades\Auth;
 use Socialite;
 use Carbon\Carbon;
+use RestCord\Model\Guild\Guild;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
-use App\Events;
 
 class DiscordLoginController extends Controller
 {
@@ -39,8 +39,36 @@ class DiscordLoginController extends Controller
 
         Auth::login($user, true);
 
+        $this->checkForAuthorizedGuild($user);
+
         return redirect('/');
     } // end handleProviderCallback
+
+    /**
+     * Flip app_access_enabled flag on user when appropriate
+     *
+     * @TODO: once we have a discord bot, spin this out into an event.
+     * Guild details can be unavailable if that region is down, but this basic info
+     * should always be available.
+     *
+     * The eventual goal is to get the roles for the server the bot is in & assign
+     * app permissions based on those, but that's for the future!
+     */
+    private function checkForAuthorizedGuild($user)
+    {
+        $api = $user->discord_api;
+
+        $guilds = collect($api->user->getCurrentUserGuilds())->filter(function (Guild $guild) {
+            return $guild->id == config('movie-night.discordServer');
+        });
+
+        $active = $guilds->count() > 0;
+
+        $user->app_access_enabled = $active;
+        $user->save();
+
+        return $user;
+    }
 
     private function driver()
     {
