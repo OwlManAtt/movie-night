@@ -27,3 +27,13 @@ html, body {
 main.container {
     padding-top: 1em;
 }
+
+.btn-discord {
+    color: $white;
+    background-color: #7289DA;
+}
+
+.btn-discord:hover {
+    color: $white;
+    filter: brightness(105%);
+}
