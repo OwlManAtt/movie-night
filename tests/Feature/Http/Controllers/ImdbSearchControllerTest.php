@@ -10,7 +10,7 @@ class ImdbSearchControllerTest extends TestCase
 {
     public function test_nothing_found()
     {
-        $this->getJson('/imdb?title=None', ['X-Requested-With' => 'XMLHttpRequest'])
+        $this->actingAs($this->user)->getJson('/imdb?title=None', ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertJson([
                 'status' => false,
                 'error' => null,
@@ -19,7 +19,7 @@ class ImdbSearchControllerTest extends TestCase
 
     public function test_results_found()
     {
-        $this->getJson('/imdb?title=Cop', ['X-Requested-With' => 'XMLHttpRequest'])
+        $this->actingAs($this->user)->getJson('/imdb?title=Cop', ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertOk()
             ->assertJson([
                 'status' => true,

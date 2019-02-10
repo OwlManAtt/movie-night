@@ -10,6 +10,7 @@ class DashboardControllerTest extends TestCase
 {
     public function test_dashboard_loads()
     {
-        $this->get('/')->assertOk();
+        $this->actingAs($this->user)->get('/')
+            ->assertOk();
     } // end test_dashboard_loads
 } // end DashboardControllerTest

@@ -10,6 +10,8 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
     use RefreshDatabase;
 
+    protected $user;
+
     public function setUp()
     {
         parent::setUp();
@@ -17,5 +19,7 @@ abstract class TestCase extends BaseTestCase
 
         $imdb_api = resolve(\App\Services\IMDB\MockImdbApi::class);
         $this->app->instance(\App\Services\IMDB\ImdbApi::class, $imdb_api);
+
+        $this->user = factory(\App\Models\User::class)->create();
     } // end setUp
 } // end TestCase

@@ -7,10 +7,15 @@ use App\Http\Controllers\Controller;
 
 class LogoutController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function __invoke()
     {
         Auth::logout();
 
-        return redirect('/');
+        return redirect(route('login'));
     }
 }

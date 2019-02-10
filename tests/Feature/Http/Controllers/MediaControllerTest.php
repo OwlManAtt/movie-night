@@ -14,14 +14,14 @@ class MediaControllerTest extends TestCase
 {
     public function test_index_loads()
     {
-        $this->get('/media')->assertOk();
+        $this->actingAs($this->user)->get('/media')->assertOk();
     } // end test_index_loads
 
     public function test_index_datatable_ajax()
     {
         $media = factory(Media::class)->states('movie', 'imdb-data')->create(['title' => 'Great Movie']);
 
-        $response = $this->getJson('/media?draw=1', ['X-Requested-With' => 'XMLHttpRequest'])
+        $response = $this->actingAs($this->user)->getJson('/media?draw=1', ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertOk()
             ->assertJson([
                 'recordsTotal' => 1,
@@ -37,7 +37,7 @@ class MediaControllerTest extends TestCase
         factory(Media::class)->states('movie', 'imdb-data')->create(['title' => "Mike's Cool and Good Adventure"]);
 
         $url = $this->buildDatatablesUrl('/media', ['id', 'title', 'imdb_rating', 'year_released', 'runtime', 'created_at'], $media->title);
-        $response = $this->getJson($url, ['X-Requested-With' => 'XMLHttpRequest'])
+        $response = $this->actingAs($this->user)->getJson($url, ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertOk()
             ->assertJson([
                 'recordsTotal' => 2,
@@ -54,7 +54,7 @@ class MediaControllerTest extends TestCase
         $media = factory(Media::class)->states('movie', 'imdb-data')->create(['title' => "Mike's Cool and Good Adventure"]);
 
         $url = $this->buildDatatablesUrl('/media', ['id', 'title', 'imdb_rating', 'year_released', 'runtime', 'created_at'], str_replace("'", '', $media->title));
-        $response = $this->getJson($url, ['X-Requested-With' => 'XMLHttpRequest'])
+        $response = $this->actingAs($this->user)->getJson($url, ['X-Requested-With' => 'XMLHttpRequest'])
             ->assertOk()
             ->assertJson([
                 'recordsTotal' => 2,
@@ -69,7 +69,7 @@ class MediaControllerTest extends TestCase
     {
         $series = factory(Media::class)->states('series', 'imdb-data')->create(['title' => 'Just the Series Record']);
 
-        $response = $this->getJson('/media?draw=1', ['X-Requested-With' => 'XMLHttpRequest'])
+        $response = $this->actingAs($this->user)->getJson('/media?draw=1', ['X-Requested-With' => 'XMLHttpRequest'])
         ->assertOk()
         ->assertJson([
             'recordsTotal' => 1,
@@ -85,7 +85,7 @@ class MediaControllerTest extends TestCase
     {
         Event::fake();
 
-        $response = $this->post(route('media.store'), ['imdbId' => 'tt12345', 'title' => 'Good Movie 2', 'mediaType' => 'movie', 'releasedYear' => null, 'posterUrl' => null]);
+        $response = $this->actingAs($this->user)->post(route('media.store'), ['imdbId' => 'tt12345', 'title' => 'Good Movie 2', 'mediaType' => 'movie', 'releasedYear' => null, 'posterUrl' => null]);
         $response->assertOk();
         $response->assertJsonStructure(['success', 'url', 'media_id']);
         Event::assertDispatched(Events\MediaChanged::class);
@@ -100,7 +100,7 @@ class MediaControllerTest extends TestCase
     {
         Event::fake();
 
-        $this->post(route('media.store'), ['imdbId' => 'tt12345', 'title' => 'Good Movie 2', 'mediaType' => 'movie', 'releasedYear' => '1999-', 'posterUrl' => null])
+        $this->actingAs($this->user)->post(route('media.store'), ['imdbId' => 'tt12345', 'title' => 'Good Movie 2', 'mediaType' => 'movie', 'releasedYear' => '1999-', 'posterUrl' => null])
             ->assertOk();
     } // end test_create_media_with_weird_year
 

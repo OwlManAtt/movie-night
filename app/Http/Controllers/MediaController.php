@@ -10,6 +10,12 @@ use App\Http\Requests\CreateMediaRequest;
 
 class MediaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('access');
+    }
+
     public function index(Request $request, MediaDataTable $dataTable)
     {
         return $dataTable->render('media.index');

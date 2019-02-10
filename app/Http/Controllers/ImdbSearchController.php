@@ -7,6 +7,12 @@ use App\Services\IMDB\ImdbApi;
 
 class ImdbSearchController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('access');
+    }
+
     public function __invoke(Request $request, ImdbApi $api)
     {
         $data = $request->validate([

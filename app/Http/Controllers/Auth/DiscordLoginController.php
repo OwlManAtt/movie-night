@@ -11,6 +11,11 @@ use App\Events;
 
 class DiscordLoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
     public function redirectToProvider()
     {
         return $this->driver()->scopes(['identify', 'email', 'guilds'])->redirect();
