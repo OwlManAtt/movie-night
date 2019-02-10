@@ -17,6 +17,23 @@ class MediaControllerTest extends TestCase
         $this->actingAs($this->user)->get('/media')->assertOk();
     } // end test_index_loads
 
+    public function test_movie_info()
+    {
+        $media = factory(Media::class)->states('movie', 'imdb-data')->create();
+
+        $response = $this->actingAs($this->user)->get(sprintf('/media/%s', $media->id))
+            ->assertOk();
+    }
+
+    public function test_series_info()
+    {
+        $media = factory(Media::class)->states('series', 'imdb-data')->create();
+
+        $response = $this->actingAs($this->user)->get(sprintf('/media/%s', $media->id))
+            ->assertOk();
+    }
+
+
     public function test_index_datatable_ajax()
     {
         $media = factory(Media::class)->states('movie', 'imdb-data')->create(['title' => 'Great Movie']);

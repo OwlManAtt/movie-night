@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use App\DataTables\MediaDataTable;
 use App\Repositories\MediaRepository;
@@ -34,4 +35,14 @@ class MediaController extends Controller
             'media_id' => $media->id,
         ]);
     } // end store
+
+    public function show($id)
+    {
+        $media = Media::with('content')->findOrFail($id);
+
+        return view('media.show', [
+            'type' => $media->content_type,
+            'media' => $media,
+        ]);
+    }
 } // end MediaController
