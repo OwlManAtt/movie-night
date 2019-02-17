@@ -22,4 +22,6 @@ Route::prefix('/login')->namespace('Auth')->group(function () {
 Route::get('/logout', 'Auth\\LogoutController')->name('logout');
 
 Route::resource('media', 'MediaController')->except(['create', 'edit']);
+Route::resource('media.episode', 'EpisodeController')->only(['index']);
+
 Route::get('/imdb', 'ImdbSearchController')->name('imdb-search');
