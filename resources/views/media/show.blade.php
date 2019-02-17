@@ -23,6 +23,15 @@
             </div>
         </div>
 
+        @if($has_episodes === true)
+        <div class="row mt-3">
+            <div class="col-12">
+                <h4>Episodes</h4>
+                {!! $dataTable->table() !!}
+            </div>
+        </div>
+        @endif
+
     </div>
 </div>
 
@@ -41,3 +50,9 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    @if($has_episodes === true)
+    {!! $dataTable->scripts() !!}
+    @endif
+@endpush

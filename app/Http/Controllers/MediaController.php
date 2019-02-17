@@ -6,6 +6,7 @@ use App\Events;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use App\DataTables\MediaDataTable;
+use App\DataTables\EpisodeDataTable;
 use App\Repositories\MediaRepository;
 use App\Http\Requests\CreateMediaRequest;
 
@@ -36,13 +37,15 @@ class MediaController extends Controller
         ]);
     } // end store
 
-    public function show($id)
+    public function show(EpisodeDataTable $dataTable, $id)
     {
         $media = Media::with('content')->findOrFail($id);
 
         return view('media.show', [
             'type' => $media->content_type,
             'media' => $media,
+            'has_episodes' => ($media->content_type === 'series'),
+            'dataTable' => $dataTable->html()->ajax(route('media.episode.index', [$media->id])),
         ]);
     }
 } // end MediaController
