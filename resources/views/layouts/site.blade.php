@@ -9,15 +9,15 @@
 
     <div class="collapse navbar-collapse" id="siteNav">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
+                <a class="nav-link" href="/">Home</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Schedule</a>
+            <li class="nav-item {{ Request::is('event*') ? 'active' : '' }}">
+                <a class="nav-link" href="/event">Schedule</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('media*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('media.index') }}">Movies &amp; Shows</a>
             </li>
         </ul>
