@@ -13,4 +13,9 @@ class Media extends Model
     {
         return $this->morphTo('content');
     }
+
+    public function getDetailsUrlAttribute()
+    {
+        return route('media.show', [$this->id]);
+    }
 } // end Media
